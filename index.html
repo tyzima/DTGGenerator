@@ -227,6 +227,23 @@ document.getElementById('generateButton').addEventListener('mouseout', function(
     $(document).ready(function() {
         $('select').select2();
     });
+
+        $(document).ready(function() {
+    function formatLogo (logo) {
+        if (!logo.id) {
+            return logo.text;
+        }
+        var $logo = $(
+            '<span><div style="font-size:14px;">' + logo.id.split(',')[1] + '</div> <div style="font-size:9px; color: lightgrey;">' + logo.text + '</div></span>'
+        );
+        return $logo;
+    };
+
+    $('select').select2({
+        templateResult: formatLogo
+    });
+});
+
 </script>
 
     <div id="successPopup" style="display: none; position: fixed; bottom: 10%; left: 50%; transform: translateX(-50%); padding: 5px 20px; height: 15px; line-height: 15px; background-color: #5dc66e; border: 5px #39aa46; border-radius: 5px; z-index: 1000; text-align: center; color: white;">
