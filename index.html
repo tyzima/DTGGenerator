@@ -98,6 +98,17 @@
 }
 
     </style>
+
+    <!-- Select2 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+
+<!-- jQuery (required for Select2) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Select2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+
+
 </head>
 <body>
     <h2>Select Logo</h2>
@@ -172,5 +183,12 @@ document.getElementById('generateButton').addEventListener('mouseout', function(
 });
 
     </script>
+
+    <script>
+    $(document).ready(function() {
+        $('select').select2();
+    });
+</script>
+
 </body>
 </html>
