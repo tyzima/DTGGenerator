@@ -164,7 +164,15 @@
             for (let i = 1; i <= 4; i++) {
                 document.getElementById('img' + i).src = urls[i - 1];
             }
-        }
+        // Display the success popup
+    const popup = document.getElementById('successPopup');
+    popup.style.display = 'block';
+
+    // Hide the success popup after 3 seconds (3000 milliseconds)
+    setTimeout(() => {
+        popup.style.display = 'none';
+    }, 3000);
+}
 
         function downloadImage(imgId, filename) {
             const link = document.createElement('a');
@@ -194,5 +202,10 @@ document.getElementById('generateButton').addEventListener('mouseout', function(
     });
 </script>
 
+    <div id="successPopup" style="display: none; position: fixed; bottom: 10%; left: 50%; transform: translateX(-50%); padding: 5px 20px; height: 15px; line-height: 15px; background-color: white; border: 5px solid green; border-radius: 5px; z-index: 1000; text-align: center;">
+    Success, Images load within 20 sec
+</div>
+
+    
 </body>
 </html>
