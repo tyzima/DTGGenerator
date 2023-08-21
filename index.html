@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Query Web App</title>
+    <style>
+        /* General styling */
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+
+        /* Styles for the dropdown and button */
+        select, button {
+            padding: 10px;
+            margin: 20px 0;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Styles for the cards */
+        .card {
+            display: inline-block;
+            width: 24%;
+            margin: 1%;
+            border: 15px solid white;
+            border-radius: 15px;
+            text-align: center;
+            box-sizing: border-box;
+            vertical-align: top;
+            opacity: 0; /* Initially hide the cards */
+        }
+
+        /* Styles for the images */
+        .card img {
+            max-width: 100%;
+            border-radius: 15px;
+        }
+
+        /* Styles for the download button */
+        .download-btn {
+            margin-top: 10px;
+            padding: 5px 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <!-- Dropdown and Generate Button -->
+    <select id="logoDropdown"></select>
+    <button onclick="generateImages()">Generate</button>
+
+
+    <!-- Cards for Images -->
+    <div class="card">
+        <h4>Front Chest</h4>
+        <img id="frontChestImg" src="" alt="Front Chest Image">
+        <button class="download-btn" onclick="downloadImage('frontChestImg', 'Center_Small')">Download</button>
+    </div>
+    <div class="card">
+        <h4>CenterChest (Small 3.5” Wide)</h4>
+        <img id="centerChestSmallImg" src="" alt="Center Chest Small Image">
+        <button class="download-btn" onclick="downloadImage('centerChestSmallImg', 'Center_Small')">Download</button>
+    </div>
+    <div class="card">
+        <h4>CenterChest (Medium 6.5” Wide)</h4>
+        <img id="centerChestMediumImg" src="" alt="Center Chest Medium Image">
+        <button class="download-btn" onclick="downloadImage('centerChestMediumImg', 'Center_Medium')">Download</button>
+    </div>
+    <div class="card">
+        <h4>CenterChest (Large 10.5” Wide)</h4>
+        <img id="centerChestLargeImg" src="" alt="Center Chest Large Image">
+        <button class="download-btn" onclick="downloadImage('centerChestLargeImg', 'Center_Large')">Download</button>
+    </div>
+
+    <script>
+      fetch('./logos.json')
+.then(response => response.json())
+.then(data => {
+    const dropdown = document.getElementById('logoDropdown');
+    data.forEach(logo => {
+        const option = document.createElement('option');
+        option.value = logo['Logo ID'];
+        option.dataset.accountId = logo['Account ID'];
+        option.text = `${logo['Description']} - ${logo['Logo ID']}`;
+        dropdown.appendChild(option);
+    });
+})
+.catch(error => {
+    console.error("There was an error fetching the logos data:", error);
+});
+
+        function generateImages() {
+            const selectedOption = dropdown.options[dropdown.selectedIndex];
+            const logoId = selectedOption.value;
+            const accountId = selectedOption.dataset.accountId;
+
+
+        document.getElementById('frontChestImg').src = `https://res.cloudinary.com/laxdotcom/image/upload/c_scale,dn_300,h_5300,q_100/c_mfit,g_north_west,l_${accountId}:SVG.${accountId}.${logoId},w_1050,x_2747,y_850/v1692642795/blankStandardPal.png`;
+
+        document.getElementById('centerChestSmallImg').src = `https://res.cloudinary.com/laxdotcom/image/upload/c_scale,dn_300,h_5300,q_100/c_mfit,g_north,l_${accountId}:SVG.${accountId}.${logoId},w_1050,y_750/v1692642795/blankStandardPal.png`;
+
+        document.getElementById('centerChestMediumImg').src = `https://res.cloudinary.com/laxdotcom/image/upload/c_scale,dn_300,h_5300,q_100/c_mfit,g_north,l_${accountId}:SVG.${accountId}.${logoId},w_2050,y_750/v1692642795/blankStandardPal.png`;
+
+        document.getElementById('centerChestLargeImg').src = `https://res.cloudinary.com/laxdotcom/image/upload/c_scale,dn_300,h_5300,q_100/c_mfit,g_north,l_${accountId}:SVG.${accountId}.${logoId},w_3150,y_700/v1692642795/blankStandardPal.png`;
+        
+        const cards = document.querySelectorAll('.card img');
+            cards.forEach(card => {
+                card.onload = function() {
+                    card.parentElement.style.opacity = "1";
+                };
+            });
+        }
+    
+
+    function downloadImage(imgId, fileNameSuffix) {
+        const imgElement = document.getElementById(imgId);
+        const a = document.createElement('a');
+        a.href = imgElement.src;
+        a.download = `DTG_${dropdown.value}_${fileNameSuffix}.png`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    }
+    </script>
+</body>
+</html>
+
