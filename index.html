@@ -6,6 +6,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>L.D DTG Generator</title>
     <style>
+        
+/* Mobile-first styles (default for smaller screens) */
+select {
+    width: 100%; /* Takes full width on smaller screens */
+    max-width: 300px; /* Maximum width it can take */
+}
+
+.cards-container .card {
+    flex-basis: calc(50% - 20px); /* Two cards per row, subtracting margin */
+    max-width: calc(50% - 20px);
+}
+
+/* Media queries for larger screens */
+@media (min-width: 768px) { /* Adjustments for screens larger than 768px width */
+    select {
+        width: 80%; /* Can be adjusted based on design preference */
+        max-width: 500px;
+    }
+
+    .cards-container .card {
+        flex-basis: auto; /* Resets to default for larger screens */
+        max-width: none;
+    }
+}
+
+        
         body {
             font-family: Arial, sans-serif;
             display: flex;
